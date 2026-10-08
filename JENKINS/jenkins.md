@@ -1,3 +1,4 @@
+# CI/CD Pipeline — DevSecOps with Jenkins, Kubernetes & Argo CD
 In our project, we use **GitHub as the source code repository**, **Jenkins as the CI/CD orchestrator**, and **Kubernetes as the target deployment platform**.
 
 Whenever a developer commits code or raises a pull request, the code is reviewed and merged into the GitHub repository. Once the code is committed, a **GitHub webhook triggers the Jenkins pipeline**.
@@ -29,3 +30,21 @@ So, overall, our flow is:
 **Developer → GitHub → Jenkins → Checkout → Build & Unit Test → SonarQube + Quality Gate → Security Checks → Container Image Build → Image Scan → Image Registry → Kubernetes Manifest/Helm Update → Argo CD → Kubernetes**
 
 The main advantage of this approach is that we combine **CI, security checks, and GitOps-based continuous delivery**, while keeping Git as the source of truth for our deployment configuration.
+
+## Can you explain your project?”
+“Sure. I’m currently working on an Immigration application that supports the immigration and visa processing workflow. From the DevOps side, my responsibility is to support the application teams by managing the application deployment, CI/CD automation, infrastructure, and environment-related activities.
+The application is a web-based application with frontend and backend components, and it uses a database for storing application and immigration-related information. We have different environments such as development, testing, and production.
+As part of my role, I work on CI/CD pipelines using Jenkins. When developers commit their code to Git, the pipeline is triggered. Jenkins checks out the code, performs the build and unit testing, and then we perform code-quality and security checks using tools such as SonarQube. After the validation is successful, we build the application/container image and deploy it to the respective environment.
+For infrastructure provisioning and configuration, we use Terraform and Ansible. Terraform is used for provisioning the required infrastructure, while Ansible is used for configuration management and application/server-related configuration.
+I also work on deployment troubleshooting, monitoring, environment issues, and coordinating with developers and other teams whenever there are deployment or application-related issues.
+So overall, my role in the Immigration project is to make sure the application can be built, tested, deployed, and supported reliably across different environments through automation and DevOps practices.”
+
+## Can you explain the architecture?”
+
+“At a high level, our Immigration application follows a web-based application architecture. Users interact with the frontend through the browser. The frontend communicates with the backend application through APIs. The backend handles the business logic and communicates with the database for storing and retrieving the required information.
+From the DevOps perspective, the application source code is maintained in Git. Jenkins is used for CI/CD automation. During the CI process, we perform build, unit testing, SonarQube quality checks and security validation. After the application is packaged successfully, it is deployed to the target environment.
+We use Terraform for infrastructure provisioning and Ansible for configuration management. We also have monitoring and logging mechanisms to identify deployment or application issues.
+So the simplified flow is:
+User → Frontend → Backend/API → Database
+And from the DevOps side:
+Git → Jenkins → Build & Tests → SonarQube/Quality Gate → Deployment → Environment → Monitoring.”
