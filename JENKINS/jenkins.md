@@ -48,3 +48,18 @@ So the simplified flow is:
 User → Frontend → Backend/API → Database
 And from the DevOps side:
 Git → Jenkins → Build & Tests → SonarQube/Quality Gate → Deployment → Environment → Monitoring.”
+## day to day activities
+
+In my current project, I work as a DevOps engineer for an **Immigration application**.
+
+My day-to-day activities mainly include **CI/CD, deployments, infrastructure, configuration management, and troubleshooting**.
+
+I work with **Git and Jenkins** for CI/CD pipelines. Whenever developers make code changes, I monitor the Jenkins pipeline and troubleshoot issues related to build, testing, SonarQube, or deployment.
+
+I use **Terraform** for infrastructure-related activities and **Ansible** for configuration management.
+
+I also support application deployments and troubleshoot environment or deployment issues. If there are any security or VAPT observations, I work with the team to fix them.
+
+Apart from technical activities, I attend **daily stand-up meetings**, work on Jira tickets based on priority, and coordinate with developers and other teams.
+
+So, overall, my main responsibility is to **automate deployments, maintain the environment, troubleshoot issues, and support the development team in delivering the application smoothly.**
