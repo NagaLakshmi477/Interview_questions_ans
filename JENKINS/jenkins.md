@@ -63,3 +63,20 @@ I also support application deployments and troubleshoot environment or deploymen
 Apart from technical activities, I attend **daily stand-up meetings**, work on Jira tickets based on priority, and coordinate with developers and other teams.
 
 So, overall, my main responsibility is to **automate deployments, maintain the environment, troubleshoot issues, and support the development team in delivering the application smoothly.**
+
+Hi, my name is Naga Lakshmi. I’m from Andhra Pradesh, and I completed my B.Tech in Electronics and Communication in 2021.
+
+I started my career as a Python developer, where I worked mainly on backend APIs and PostgreSQL. Later, I moved into DevOps, and I now have over 4 years of overall experience, mainly working with AWS and DevOps technologies.
+
+Currently, I’m working at HTC Global Services on the Open ERP Immigration project. My responsibilities include building and maintaining Jenkins CI/CD pipelines, starting from application build and testing, followed by Docker image creation, security scanning, pushing images to Amazon ECR, and deploying applications across different environments.
+
+I also provision AWS infrastructure using Terraform, and I work with Amazon EKS for deploying microservices using Helm and Argo CD. We have also integrated SonarQube and security scanning into our CI/CD pipelines as part of our DevSecOps approach.
+
+Before this, I worked at Deloitte on the TIAA project, where my main responsibilities were provisioning AWS infrastructure using Terraform and server configuration using Ansible, with Jenkins used for automation.
+
+My strongest areas are Terraform, Jenkins, Docker, and Ansible, and I also have hands-on experience with Kubernetes and EKS. I particularly enjoy troubleshooting because a major part of my work involves identifying why a deployment, application, or connectivity issue is happening and resolving it.
+
+Going forward, I want to continue growing in cloud, Kubernetes, and DevOps, and I believe this opportunity at Infosys would give me a good platform to take that experience further.
+
+Thank you.
+
