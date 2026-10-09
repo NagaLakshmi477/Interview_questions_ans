@@ -79,3 +79,31 @@ Right now, I’m working at HTC Global Services on the Open ERP Immigration proj
 
 
 I’m really looking to keep growing in DevOps and work on bigger, more challenging projects. That’s all about me. Thank you.
+
+## Tell me about your current project.
+My current project is Open ERP Immigration at HTC Global Services. It's a microservices application running on AWS. I joined in May 2024 as a DevOps engineer.
+
+My work is in three parts. First, CI/CD. I build and maintain the Jenkins pipelines. When a developer pushes code to Git, Jenkins builds it, runs the SonarQube check, builds the Docker image, scans it for vulnerabilities, pushes it to Amazon ECR, and deploys it to the different environments.
+
+Second, infrastructure. I create the AWS infrastructure using Terraform: EC2, security groups, route tables, NAT gateway, load balancer, Route 53, ECR, and the EKS cluster. We use Terraform modules so the setup stays consistent across environments.
+
+Third, deployment. Our microservices run on Amazon EKS. We deploy them using Helm charts, and Argo CD handles GitOps, so whatever is in Git is what runs in the cluster. We use blue-green deployment for safe releases, and HPA to scale the pods automatically when the load goes up. I also set up basic Prometheus and Grafana dashboards to monitor the applications and infrastructure.
+
+That's about my current project
+
+## Explain your project architecture from a DevOps perspective.
+Go in this order: Infrastructure → Application → Traffic → Deployment → Monitoring. If they let you, draw it on paper while you speak.
+
+"Our project is Open ERP Immigration. It's a microservices application running on AWS, and I'll explain the architecture from a DevOps side.
+
+First, the infrastructure. Everything on AWS is created using Terraform, so nothing is built manually. We have a VPC with subnets, route tables, security groups, and a NAT gateway. The application runs inside this network, and the NAT gateway lets the private resources reach the internet when needed. In front, we have an Application Load Balancer, and Route 53 handles the domain name.
+
+Second, the application. Each microservice is packaged as a Docker image, and the images are stored in Amazon ECR. They run on Amazon EKS, which is our Kubernetes cluster. We deploy them using Helm charts, and we use RBAC to control who can access what in the cluster. For storage, we use EBS and EFS where the data needs to stay.
+
+Third, how a user request flows. The user opens our domain. Route 53 sends the request to the load balancer, the load balancer sends it to the services and pods in EKS, and the pods talk to the database.
+
+Fourth, CI/CD and deployment. When a developer pushes code to Git, the Jenkins pipeline builds it, runs the SonarQube check, builds the Docker image, scans it, and pushes it to ECR. Then Argo CD takes care of GitOps, so whatever is in Git is what runs in the cluster. We use blue-green deployment for safe releases, and HPA to scale the pods when the load goes up.
+
+Finally, monitoring. We use Prometheus and Grafana dashboards to watch the health of the applications and infrastructure, so we can find issues quickly."
+
+Remember it as: Terraform builds → Docker packs → ECR stores → EKS runs → ALB serves → Argo CD syncs → Grafana watches.
