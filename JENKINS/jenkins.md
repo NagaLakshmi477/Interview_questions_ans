@@ -80,3 +80,17 @@ Going forward, I want to continue growing in cloud, Kubernetes, and DevOps, and 
 
 Thank you.
 
+Final Self-Introduction (about 1.5 to 2 minutes)
+
+“Hi, my name is Naga Lakshmi. I have four plus years of experience in DevOps and AWS cloud.
+
+I did my B.Tech in Electronics and Communication Engineering. After graduation, I started my career at Deloitte, where I joined as a Python developer on the Onebom project. There I built backend APIs using Python and PostgreSQL. That’s where I got interested in how applications get deployed and run, so I decided to move into DevOps.
+
+During that time, I completed my Azure AZ-900 certification to build my cloud basics. After that, within Deloitte, I got the opportunity to work as an AWS DevOps engineer on the TIAA project.
+
+On TIAA, I mostly worked on Terraform and Ansible. I created AWS infrastructure like EC2, load balancers, and Route 53 using Terraform. I used modules and workspaces for different environments, and I stored the Terraform state in S3 with DynamoDB locking. For server setup and deployments, I used Ansible playbooks and roles, and I connected everything through Jenkins pipelines.
+
+Right now, I’m working at HTC Global Services on the Open ERP Immigration project. Here I build and maintain Jenkins CI/CD pipelines. The pipeline pulls the code, builds it, creates the Docker image, scans it, pushes it to ECR, and deploys to different environments. We also work on Amazon EKS and Kubernetes with Helm charts, Blue-Green deployment, and autoscaling. For deployment we use Argo CD, which is GitOps. I’ve also added SonarQube quality gates in the pipeline, and I made some basic Prometheus and Grafana dashboards for monitoring.
+
+
+I’m really looking to keep growing in DevOps and work on bigger, more challenging projects. That’s all about me. Thank you.
