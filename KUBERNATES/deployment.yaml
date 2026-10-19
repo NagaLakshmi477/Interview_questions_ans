@@ -1,0 +1,22 @@
+apiVesrion: app/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  lables:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLables:
+      app: nginx
+  template:
+    metadata:
+      lables:
+        app: nginx
+
+  spec:
+    conatiners:
+    - name: nginx
+      image: nginx:1.14.2
+      ports:
+        containerports: 8080
