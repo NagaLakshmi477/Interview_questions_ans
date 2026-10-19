@@ -1,0 +1,11 @@
+apiVesrion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  conatiners:
+  - name: nginx
+    image: nginx
+    ports:
+      containerport: 80
+    
