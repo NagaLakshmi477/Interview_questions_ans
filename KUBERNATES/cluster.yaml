@@ -1,0 +1,14 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: practice-cluster
+  region: us-east-1
+
+managedNodeGroups:
+  - name: practice-workers
+    instanceType: t3.small
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 1
+    volumeSize: 20
