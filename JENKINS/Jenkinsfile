@@ -1,0 +1,151 @@
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven3'
+        jdk 'JDK17'
+    }
+
+    environment {
+        AWS_REGION     = 'ap-south-1'
+        AWS_ACCOUNT_ID = '123456789012'
+        ECR_REPOSITORY = 'my-java-app'
+        IMAGE_TAG      = "${BUILD_NUMBER}"
+        IMAGE_URI      = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build and Unit Test') {
+            steps {
+                sh 'mvn -B clean verify'
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true,
+                          testResults: 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    sh '''
+                        mvn -B sonar:sonar \
+                          -Dsonar.projectKey=my-java-app
+                    '''
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Quality Gate failed: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Dependency Scan') {
+            steps {
+                sh '''
+                    mvn org.owasp:dependency-check-maven:check
+                '''
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh '''
+                    docker build --pull \
+                      -t ${ECR_REPOSITORY}:${IMAGE_TAG} .
+                '''
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            steps {
+                sh '''
+                    trivy image \
+                      --exit-code 1 \
+                      --severity HIGH,CRITICAL \
+                      --ignore-unfixed \
+                      ${ECR_REPOSITORY}:${IMAGE_TAG}
+                '''
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                sh '''
+                    aws ecr get-login-password \
+                      --region ${AWS_REGION} |
+                    docker login \
+                      --username AWS \
+                      --password-stdin \
+                      ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+                    docker tag ${ECR_REPOSITORY}:${IMAGE_TAG} \
+                      ${IMAGE_URI}:${IMAGE_TAG}
+
+                    docker push ${IMAGE_URI}:${IMAGE_TAG}
+                '''
+            }
+        }
+
+        stage('Update GitOps Repository') {
+            steps {
+                // Update the Kubernetes manifest in a separate Git repository.
+                withCredentials([usernamePassword(
+                    credentialsId: 'gitops-repo-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_TOKEN'
+                )]) {
+                    sh '''
+                        set -eu
+                        git clone \
+                          https://${GIT_USER}:${GIT_TOKEN}@github.com/YOUR_ORG/YOUR_GITOPS_REPO.git \
+                          gitops-repo
+
+                        cd gitops-repo
+
+                        # Update the image of the application container.
+                        sed -i "s|image: .*|image: ${IMAGE_URI}:${IMAGE_TAG}|" \
+                          apps/my-java-app/deployment.yaml
+
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@example.com"
+
+                        git add apps/my-java-app/deployment.yaml
+                        git commit -m "Update application image to ${IMAGE_TAG}"
+                        git push origin HEAD
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline successful. Argo CD will sync the GitOps changes.'
+        }
+        failure {
+            echo 'Pipeline failed. Check the Jenkins console output.'
+        }
+        always {
+            cleanWs()
+        }
+    }
+}
