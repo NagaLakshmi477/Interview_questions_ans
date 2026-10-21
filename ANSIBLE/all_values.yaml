@@ -1,0 +1,82 @@
+
+- name: Ansible concepts in one playbook
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  # 1. Play variables
+  vars:
+    GREETING: "Hello from play"
+    age: 25
+    price: 10.5
+    name: "Ansible"
+    enabled: true
+    packages:
+      - nginx
+      - git
+    user:
+      name: "John"
+      age: 25
+
+  # 2. Prompt variables
+  vars_prompt:
+    - name: PROMPT_GREETING
+      prompt: "Enter your greeting"
+      private: false
+
+  tasks:
+
+    # 3. Task variables
+    - name: Display task variable
+      vars:
+        GREETING: "Hello from task"
+      ansible.builtin.debug:
+        msg: "{{ GREETING }}"
+
+    # 4. Display variables and data types
+    - name: Display all data types
+      ansible.builtin.debug:
+        msg:
+          - "Greeting: {{ GREETING }}"
+          - "Name: {{ name }}"
+          - "Age: {{ age }}"
+          - "Price: {{ price }}"
+          - "Enabled: {{ enabled }}"
+          - "Packages: {{ packages }}"
+          - "User: {{ user }}"
+
+    # 5. Display prompted variable
+    - name: Display user input
+      ansible.builtin.debug:
+        msg: "{{ PROMPT_GREETING }}"
+
+    # 6. Display inventory variable
+    - name: Display inventory variable
+      ansible.builtin.debug:
+        msg: "{{ INVENTORY_GREETING | default('Not defined in inventory') }}"
+
+    # 7. Condition using when
+    - name: Check whether age is greater than 18
+      ansible.builtin.debug:
+        msg: "Age is greater than 18"
+      when: age > 18
+
+    # 8. Command module
+    - name: Display current directory
+      ansible.builtin.command: pwd
+      register: command_output
+      changed_when: false
+
+    - name: Display command output
+      ansible.builtin.debug:
+        msg: "{{ command_output.stdout }}"
+
+    # 9. Shell module
+    - name: Display home directory using shell
+      ansible.builtin.shell: 'echo $HOME'
+      register: shell_output
+      changed_when: false
+
+    - name: Display shell output
+      ansible.builtin.debug:
+        msg: "{{ shell_output.stdout }}"
