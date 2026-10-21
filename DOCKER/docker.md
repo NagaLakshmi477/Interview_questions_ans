@@ -1,6 +1,5 @@
 # Docker Interview Questions and Answers
 
-These answers are written in simple, natural English for DevOps interview preparation and video explanations.
 
 ## 1. Explain Docker.
 
